@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import "./Hens.css"
 
-export const HenList = ({ }) => {
+export const HenList = ({ searchTermState }) => {
     const [hens, setHens] = useState([])
     const [filteredHens, setFiltered] = useState([])
     const [laying, setLaying] = useState(null)
@@ -13,12 +13,32 @@ export const HenList = ({ }) => {
 
     useEffect(
         () => {
+            const searchedHens = hens.filter(hen => {
+                return hen.name.toLowerCase().includes(searchTermState.toLowerCase())
+            })
+            setFiltered(searchedHens)
+        },
+        [searchTermState]
+    )
+
+    // useEffect(
+    //     () => {
+    //         const searchedHenBreeds = hens.filter(hen => {
+    //             return hen.breed.toLowerCase().startsWith(searchTermState.toLowerCase())
+    //         })
+    //         setFiltered(searchedHenBreeds)
+    //     },
+    //     [searchTermState]
+    // )
+
+    useEffect(
+        () => {
             if (laying === true) {
                 const layingHens = hens.filter(hen => hen.layingStatusesId === 1)
                 setFiltered(layingHens)
             }
             else if (laying === false) {
-                const nonLayingHens = hens.filter(hen => hen.layingStatusesId !== 1)
+                const nonLayingHens = hens.filter(hen => hen.layingStatusesId === 2)
                 setFiltered(nonLayingHens)
             }
             else {
@@ -64,10 +84,14 @@ export const HenList = ({ }) => {
 
     return <>
         <>
+            <div>
+                <button onClick={() => navigate("/hen/create")} >Add New Hen</button>
+            </div>
+        </>
+        <>
             <button onClick={() => { setLaying(true) }} >Laying Hens</button>
             <button onClick={() => { setLaying(false) }} >Non-Laying Hens</button>
             <button onClick={() => { setLaying(null) }} >All Hens</button>
-            <button onClick={() => navigate("/hen/create")} >Add New Hen</button>
         </>
         <h2>List of Hens</h2>
 

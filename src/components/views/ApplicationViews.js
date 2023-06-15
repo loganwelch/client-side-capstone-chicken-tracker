@@ -1,7 +1,8 @@
 import { Outlet, Route, Routes } from "react-router-dom"
-import { HenList } from "../hens/HenList"
+//import { HenList } from "../hens/HenList"
 import { HenDetails } from "../hens/HenDetails"
 import { HenForm } from "../hens/HenForm"
+import { HenContainer } from "../hens/HenContainer"
 
 export const ApplicationViews = () => {
 	return (
@@ -14,7 +15,7 @@ export const ApplicationViews = () => {
 					<Outlet />
 				</>
 			}>
-				<Route path="hens" element={<HenList />} />
+				<Route path="hens" element={<HenContainer />} />
 				<Route path="hens/:henId" element={< HenDetails />} />
 
 				<Route path="hen/create" element={<HenForm />} />
@@ -24,3 +25,4 @@ export const ApplicationViews = () => {
 	)
 }
 
+//<Route path="hens" element={<HenList />} />

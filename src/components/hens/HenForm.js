@@ -10,6 +10,21 @@ export const HenForm = () => {
         layingStatusesId: 0,
         notes: ""
     })
+    //const localPalaceUser = localStorage.getItem("kandy_user")
+    //const kandyUserObject = JSON.parse(localKandyUser)
+
+    //let userId = 0;
+    //update(prevState => ({ ...prevState, userId: userId }))
+    const [userId, setUserId] = useState(0)
+    useEffect(
+        () => {
+            const palaceUser = localStorage.getItem("palace_user");
+            if (palaceUser !== null) {
+                setUserId(JSON.parse(palaceUser).id);
+            }
+        },
+        []
+    )
 
     const navigate = useNavigate()
     const [breeds, setBreeds] = useState([])
@@ -20,15 +35,15 @@ export const HenForm = () => {
         console.log("You clicked the button")
 
         const henToSendToAPI = {
-            userId: hen.userId,
+            userId: userId,
             breedId: hen.breedId,
             name: hen.name,
             dateHatched: hen.dateHatched,
             layingStatusesId: hen.layingStatusesId,
             notes: hen.notes
         }
-
-        if (hen.userId !== 0 && hen.breedId !== 0 && hen.name !== "" && hen.dateHatched !== "" && hen.layingStatusesId !== 0) {
+        henToSendToAPI.userId = userId;
+        if (userId !== 0 && hen.breedId !== 0 && hen.name !== "" && hen.dateHatched !== "" && hen.layingStatusesId !== 0) {
             return fetch(`http://localhost:8088/hens`, {
                 method: "POST",
                 headers: {
@@ -67,6 +82,7 @@ export const HenForm = () => {
     return (
         <form className="henForm">
             <h2 className="henForm__title">New Hen Addition</h2>
+
             <fieldset>
                 <div className="form-group">
                     <label>Name:</label>
@@ -96,7 +112,7 @@ export const HenForm = () => {
                         onChange={
                             (evt) => {
                                 const copy = { ...hen }
-                                copy.breedId = evt.target.value
+                                copy.breedId = parseInt(evt.target.value)
                                 update(copy)
                             }
                         }>
@@ -136,7 +152,7 @@ export const HenForm = () => {
                         onChange={
                             (evt) => {
                                 const copy = { ...hen }
-                                copy.layingStatusesId = evt.target.value
+                                copy.layingStatusesId = parseInt(evt.target.value)
                                 update(copy)
                             }
                         }>

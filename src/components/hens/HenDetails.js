@@ -4,8 +4,7 @@ import { useParams } from "react-router-dom"
 export const HenDetails = () => {
     const { henId } = useParams()
     const [hen, updateHen] = useState({})
-    // const [hens, setHens] = useState([])
-    // const [filteredHens, setFiltered] = useState([])
+
 
     useEffect(
         () => {
@@ -18,20 +17,7 @@ export const HenDetails = () => {
         },
         [henId]
     )
-    // http://localhost:8088/hens?_expand=breed&id=${henId}
-    //http://localhost:8088/hens?_expand=breed&_expand=layingStatuse&id=${henId}
 
-    // useEffect(
-    //     () => {
-    //         fetch(`http://localhost:8088/hens?_expand=breed`)
-    //             .then(response => response.json())
-    //             .then((henArray) => {
-    //                 setHens(henArray)
-
-    //             })
-    //     },
-    //     []
-    // )
 
     return <section className="henCard" key={(`hen--${hen.id}`)}>
         <header className="henCard__header">{hen.name}</header>
