@@ -3,6 +3,7 @@ import { Outlet, Route, Routes } from "react-router-dom"
 import { HenDetails } from "../hens/HenDetails"
 import { HenForm } from "../hens/HenForm"
 import { HenContainer } from "../hens/HenContainer"
+import { EditHenForm } from "../profile/EditHenForm"
 
 export const ApplicationViews = () => {
 	return (
@@ -19,6 +20,7 @@ export const ApplicationViews = () => {
 				<Route path="hens/:henId" element={< HenDetails />} />
 
 				<Route path="hen/create" element={<HenForm />} />
+				<Route path="profile/edit/:henId" element={<EditHenForm />} />
 
 			</Route>
 		</Routes>
